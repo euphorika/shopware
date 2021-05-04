@@ -50,7 +50,7 @@ use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
 
 class ProductAttributeFacetHandler implements HandlerInterface, ResultHydratorInterface
 {
-    const AGGREGATION_SIZE = 5000;
+    public const AGGREGATION_SIZE = 5000;
 
     /**
      * @var FacetInterface[]|CriteriaPartInterface[]
@@ -158,7 +158,7 @@ class ProductAttributeFacetHandler implements HandlerInterface, ResultHydratorIn
                 return $item['key'] !== '';
             });
 
-            if (in_array($type, [TypeMappingInterface::TYPE_DATE, TypeMappingInterface::TYPE_DATETIME])) {
+            if (\in_array($type, [TypeMappingInterface::TYPE_DATE, TypeMappingInterface::TYPE_DATETIME])) {
                 $aggregations[$key] = $this->formatDates($aggregations[$key]);
             }
 
@@ -270,13 +270,13 @@ class ProductAttributeFacetHandler implements HandlerInterface, ResultHydratorIn
             $actives = $condition->getValue();
 
             // $condition->getValue() can return a string
-            if (!is_array($actives)) {
+            if (!\is_array($actives)) {
                 $actives = [$actives];
             }
         }
 
         $items = array_map(function ($row) use ($actives) {
-            return new ValueListItem($row, $row, in_array($row, $actives));
+            return new ValueListItem($row, $row, \in_array($row, $actives));
         }, $values);
 
         if ($criteriaPart->getMode() == ProductAttributeFacet::MODE_RADIO_LIST_RESULT) {
